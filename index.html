@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="main.css">
+  <title>Todo_app</title>
+</head>
+<body>
+  <div id="app">
+    <label v-for="label in options">
+      <input type="radio"
+        v-model="current"
+        v-bind:value="label.value">{{ label.label }}
+    </label>
+    <h2>{{ computedTodos.length }}件を表示中</h2>
+    <table>
+      <tr>
+        <th class="id">ID</th>
+        <th class="name">名前</th>
+        <th class="state">状態</th>
+        <th class="button">-</th>
+      </tr>
+      <tbody>
+      <tr v-for="item in computedTodos" v-bind:key="item.id" >
+        <th>{{ item.id }}</th>
+        <td>{{ item.name }}</td>
+        <td class="state">
+          <button v-on:click="doChangeState(item)" v-if="item.state == 1">完了</button>
+          <button v-on:click="doChangeState(item)" v-else>作業中</button>
+        </td>
+        <td class="button">
+          <button v-on:click="doRemove(item)">削除</button>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+
+    <h2>新しい作業の追加</h2>
+    <form class="add-form" v-on:submit.prevent="doAdd">
+      名前<input type="text" ref="name">
+      <button type="submit">追加</button>
+    </form>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="main.js"></script>
+</html>
